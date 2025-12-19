@@ -33,5 +33,7 @@ int main(int argc, char **argv)
     if (!get_map(argv, map))
         return (printf("Error get_map\n"));
     if (!parser(map))
+        return (0);
+    if (!raycast(map))
         return(0);
 }

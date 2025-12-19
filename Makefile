@@ -1,31 +1,43 @@
 NAME = cube
-CC = cc
-CCFLAGS = -Wall -Wextra -Werror
 
-SRC = cube.c ./gnl/map.c ./gnl/get_next_line.c ./gnl/get_next_line_utils.c ./parser/parser.c ./parser/coordinates.c ./parser/aux_coordinates.c ./parser/utils_parser.c\
+MLX_PATH = ./minilibx-linux
+LIBFT_PATH = ./libft
+LIBFT = $(LIBFT_PATH)/libft.a
+MLX = $(MLX_PATH)/libmlx.a
+CC = cc
+
+SRC = cube.c \
+./gnl/map.c ./gnl/get_next_line.c ./gnl/get_next_line_utils.c \
+./parser/flood_fill.c ./parser/parser.c ./parser/coordinates.c ./parser/aux_coordinates.c ./parser/utils_parser.c \
+./raycast/raycast.c
 
 OBJS = ${SRC:%.c=objects/%.o}
 
-INCLUDES = -I. -Ilibft
-LIBFTA = libft/libft.a
+CFLAGS = -Wall -Wextra -Werror -I. -I/usr/include -I$(MLX_PATH)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	@$(MAKE) -C libft
-	@$(CC) $(CCFLAGS) $(OBJS) $(LIBFTA) -lreadline -lhistory -o $(NAME)
+$(NAME): $(OBJS) $(MLX) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS) $(MLX) $(LIBFT) -L$(MLX_PATH) -lX11 -lXext -lm -o $(NAME)
+
+$(MLX):
+	$(MAKE) -C $(MLX_PATH)
+
+$(LIBFT):
+	@make all -sC ./libft
 
 objects/%.o: %.c
-	@mkdir -p $(@D)
-	@$(CC) $(CCFLAGS) $(INCLUDES) -c $< -o $@
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@$(RM) -rf objects
-	@$(MAKE) -C libft clean
+	rm -rf objects
+	@make clean -sC ./libft
+	$(MAKE) -C $(MLX_PATH) clean
 
 fclean: clean
-	@$(RM) $(NAME)
-	@$(MAKE) -C libft fclean
+	rm -f $(NAME)
+	@make fclean -sC ./libft
 
 re: fclean all
 

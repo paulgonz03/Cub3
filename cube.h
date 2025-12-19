@@ -1,19 +1,38 @@
 #ifndef CUBE_H
 #define CUBE_H
 
-# include "./libft/libft.h"
-# include <fcntl.h>
-# include <limits.h>
+#include "./libft/libft.h"
+#include "minilibx-linux/mlx.h"
+#include <fcntl.h>
+#include <limits.h>
 #include <strings.h>
-# include <stddef.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <string.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 42
+#endif
+
+#define FLOOR_TEXTURE "./textures/floor.xpm"
+#define WALL_TEXTURE "./textures/wall.xpm"
+#define NO_TEXTURE "./textures/no_plyr.xpm"
+#define SO_TEXTURE "./textures/so_plyr.xpm"
+#define WE_TEXTURE "./textures/we_plyr.xpm"
+#define EA_TEXTURE "./textures/ea_plyr.xpm"
+
+enum
+{
+    FLOOR = 0,
+    WALL,
+    NO_PLYR,
+    SO_PLYR,
+    WE_PLYR,
+    EA_PLYR,
+    TOTAL
+};
 
 typedef struct s_parse_flags
 {
@@ -41,6 +60,16 @@ typedef struct s_files
     char *c_file;
 } t_files;
 
+typedef struct s_mlx
+{
+    void *mlx;
+    void *win;
+    void *image;
+    int img_width;
+    int img_height;
+
+} t_mlx;
+
 typedef struct s_map
 {
     char **map;
@@ -52,44 +81,58 @@ typedef struct s_map
     int y_limit;
     char type;
     t_files *files;
+    t_mlx *mlx_data;
 } t_map;
+
+// RAYCAST
+
+// Raycast.c
+int raycast(t_map *map_data);
 
 // MAIN
 void printmap(char **map);
 
 // GNL
-char	*get_next_line(int fd);
-char	*extract_line(char *aux_read);
-char	*remove_first_line(char *statica);
-int		mystrlen(char *str);
-char	*mystrjoin(char *statica, char *aux_read);
-char	*get_read(int fd, char *statica);
-int		mystrchr(const char *src, int c);
-char	*aux_get_read(int fd, char *statica, char *aux_read);
 
-//GNL
+// Get_next_line_utils.c
+int mystrlen(char *str);
+char *mystrjoin(char *statica, char *aux_read);
+int mystrchr(const char *src, int c);
+char *aux_get_read(int fd, char *statica, char *aux_read);
 
-//Map.c
+// Get_next_line.c
+char *extract_line(char *aux_read);
+char *remove_first_line(char *statica);
+char *get_read(int fd, char *statica);
+char *get_next_line(int fd);
+
+// Map.c
 int aux_get_map(char **argv, t_map *data_map);
 int get_map(char **argv, t_map *map_data);
 
-//PARSER.C
+// PARSER.C
 
-//Coordinates.c
+// Aux_coordinates.c
+int check_order(t_parse_flags *flags);
+int realloc_coordinates(t_map *map_data, t_parse_flags *flags);
+
+// Coordinates.c
 void find_coordinates(t_map *map_data, t_parse_flags *flags);
 int check_flags(t_parse_flags *flags);
 int fill_coordinates(t_map *map_data, t_parse_flags *flags);
 int coordinates_parser(t_map *map_data);
 
-//Aux_coordinates.c
-int check_order(t_parse_flags *flags);
-int realloc_coordinates(t_map *map_data, t_parse_flags *flags);
+// Flood_fill.c
+void find_player(t_map *map_data);
+void limits_map(t_map *map_data);
+int aux_flood_fill(t_map *map_data, int x, int y, char **map);
+int flood_fill(t_map *map_data);
 
-//Parser.c
+// Parser.c
 int name_map_parser(char **argv);
 int parser(t_map *map_data);
 
-//Utils_parser.c
+// Utils_parser.c
 void ft_free_free(char **temp);
 int realloc_map(t_map *map_data, int pos);
 
