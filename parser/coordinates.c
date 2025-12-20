@@ -110,7 +110,6 @@ int coordinates_parser(t_map *map_data)
 {
     t_parse_flags *flags;
 
-    map_data->files = ft_calloc(1, sizeof(t_files));
     flags = ft_calloc(1, sizeof(t_parse_flags));
     find_coordinates(map_data, flags);
     if (!check_flags(flags))

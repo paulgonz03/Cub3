@@ -75,7 +75,6 @@ typedef struct s_mlx
     int order_bytes; // orden de bytes
     int img_width;
     int img_height;
-
 } t_mlx;
 
 typedef struct s_map
