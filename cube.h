@@ -68,7 +68,7 @@ typedef struct s_mlx
 {
     void *mlx;
     void *win;
-    void *image;
+    void *image[4];
     int img_width;
     int img_height;
 
