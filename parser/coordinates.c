@@ -61,34 +61,48 @@ int check_flags(t_parse_flags *flags)
     return (1);
 }
 
+char *clean_path(char *line)
+{
+    char *path;
+    int i;
+    int j;
+    
+    i = 0;
+    while (line[i] && line[i] != ' ')
+        i++;
+    while (line[i] && line[i] == ' ')
+        i++;
+    j = 0;
+    path = malloc(ft_strlen(&line[i]) + 1);
+    if (!path)
+        return (NULL);
+    while (line[i] && line[i] != '\n')
+    {
+        path[j] = line[i];
+        i++;
+        j++;
+    }
+    path[j] = '\0';
+    return (path);
+}
+
 int fill_coordinates(t_map *map_data, t_parse_flags *flags)
 {
-    int i;
-
-    i = 0;
-    while (map_data->map && map_data->map[flags->pos_c][i] == 32)
-        i++;
-    map_data->files->c_file = ft_strdup(map_data->map[flags->pos_c]);
-    i = 0;
-    while (map_data->map && map_data->map[flags->pos_f][i] == 32)
-        i++;
-    map_data->files->f_file = ft_strdup(map_data->map[flags->pos_f]);
-    i = 0;
-    while (map_data->map && map_data->map[flags->pos_no][i] == 32)
-        i++;
-    map_data->files->no_file = ft_strdup(map_data->map[flags->pos_no]);
-    i = 0;
-    while (map_data->map && map_data->map[flags->pos_so][i] == 32)
-        i++;
-    map_data->files->so_file = ft_strdup(map_data->map[flags->pos_so]);
-    i = 0;
-    while (map_data->map && map_data->map[flags->pos_we][i] == 32)
-        i++;
-    map_data->files->we_file = ft_strdup(map_data->map[flags->pos_we]);
-    i = 0;
-    while (map_data->map && map_data->map[flags->pos_ea][i] == 32)
-        i++;
-    map_data->files->ea_file = ft_strdup(map_data->map[flags->pos_ea]);
+    map_data->files = ft_calloc(1, sizeof(t_files));
+    if (!map_data->files)
+        return (0);
+    map_data->files->no_file = clean_path(map_data->map[flags->pos_no]);
+    map_data->files->so_file = clean_path(map_data->map[flags->pos_so]);
+    map_data->files->we_file = clean_path(map_data->map[flags->pos_we]);
+    map_data->files->ea_file = clean_path(map_data->map[flags->pos_ea]);
+    map_data->files->f_file = clean_path(map_data->map[flags->pos_f]);
+    map_data->files->c_file = clean_path(map_data->map[flags->pos_c]);
+    
+    if (!map_data->files->no_file || !map_data->files->so_file || 
+        !map_data->files->we_file || !map_data->files->ea_file ||
+        !map_data->files->f_file || !map_data->files->c_file)
+        return (0);
+    
     return (1);
 }
 

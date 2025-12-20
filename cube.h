@@ -67,6 +67,12 @@ typedef struct s_mlx
     void *mlx;
     void *win;
     void *image[5];
+    void *img;
+    void *img_data;
+    int *texture_data[5];
+    int bpp; // bits per pixel
+    int bpl; // bits per line
+    int order_bytes; // orden de bytes
     int img_width;
     int img_height;
 
@@ -127,6 +133,7 @@ int realloc_coordinates(t_map *map_data, t_parse_flags *flags);
 // Coordinates.c
 void find_coordinates(t_map *map_data, t_parse_flags *flags);
 int check_flags(t_parse_flags *flags);
+char *clean_path(char *line);
 int fill_coordinates(t_map *map_data, t_parse_flags *flags);
 int coordinates_parser(t_map *map_data);
 
