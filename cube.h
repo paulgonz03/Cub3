@@ -16,21 +16,25 @@
 #define BUFFER_SIZE 42
 #endif
 
-#define FLOOR_TEXTURE "./textures/floor.xpm"
-#define WALL_TEXTURE "./textures/wall.xpm"
-#define NO_TEXTURE "./textures/no_plyr.xpm"
-#define SO_TEXTURE "./textures/so_plyr.xpm"
-#define WE_TEXTURE "./textures/we_plyr.xpm"
-#define EA_TEXTURE "./textures/ea_plyr.xpm"
+#define KEYA 97
+#define KEYS 115
+#define KEYD 100
+#define KEYW 119
+#define KEYUP 65362
+#define KEYRIGHT 65363
+#define KEYDOWN 65364
+#define KEYLEFT 65361
+#define KEYESC 65307
+#define CLOSEWIN 17
 
 enum
 {
     FLOOR = 0,
-    WALL,
-    NO_PLYR,
-    SO_PLYR,
-    WE_PLYR,
-    EA_PLYR,
+    CEILING,
+    NO,
+    SO,
+    WE,
+    EA,
     TOTAL
 };
 
