@@ -34,6 +34,7 @@ void find_player(t_map *map_data)
         {
             if (map_data->map[map_data->y][map_data->x] == 'N' || map_data->map[map_data->y][map_data->x] == 'S' || map_data->map[map_data->y][map_data->x] == 'E' || map_data->map[map_data->y][map_data->x] == 'W')
             {
+                map_data->view_player = map_data->map[map_data->y][map_data->x];
                 map_data->type = map_data->map[map_data->y][map_data->x];
                 return;
             }

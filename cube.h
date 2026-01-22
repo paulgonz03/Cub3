@@ -46,6 +46,16 @@ typedef struct s_files
     char *c_file;
 } t_files;
 
+typedef struct s_keys
+{
+    int w;
+    int a;
+    int s;
+    int d;
+
+}t_keys;
+
+
 typedef struct s_mlx
 {
     void *mlx;
@@ -59,6 +69,8 @@ typedef struct s_mlx
     int order_bytes; // orden de bytes
     int img_width;
     int img_height;
+    int plyr_angle;
+    t_keys *keys;
 } t_mlx;
 
 typedef struct s_map
@@ -69,6 +81,7 @@ typedef struct s_map
     int y;
     int x_limit;
     int y_limit;
+    char view_player;
     char type;
     t_files *files;
     t_mlx *mlx_data;

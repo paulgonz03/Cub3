@@ -22,41 +22,99 @@ int init_textures(t_files *files, t_mlx *mlx_data)
 	return (1);
 }
 
+void init_data(t_map *map_data)
+{
+	if (map_data->view_player == 'E')
+		map_data->mlx_data->plyr_angle = 0;
+	else if (map_data->view_player == 'N')
+		map_data->mlx_data->plyr_angle = 90;
+	else if (map_data->view_player == 'W')
+		map_data->mlx_data->plyr_angle = 180;
+	else if (map_data->view_player == 'S')
+		map_data->mlx_data->plyr_angle = 270;
+	if (!init_textures(map_data->files, map_data->mlx_data))
+	{
+		printf("Error: init textures\n");
+		exit(0);
+	}
+	map_data->mlx_data->win = mlx_new_window(map_data->mlx_data->mlx, 1080, 720, "Cub3D");
+}
+
+
 int closewin(t_mlx *mlx_data)
 {
 	mlx_destroy_image(mlx_data->mlx, mlx_data->img);
 	mlx_destroy_window(mlx_data->mlx, mlx_data->win);
 	exit(0);
 }
-int keycodes(int keycode, t_map *map_data)
+int key_press(int keycode, t_mlx *mlx_data)
 {
-	// if (keycode == KEYD || keycode == KEYRIGHT)
-	// 	moveright(map_data);
-	// if (keycode == KEYA || keycode == KEYLEFT)
-	// 	moveleft(map_data);
-	// if (keycode == KEYS || keycode == KEYDOWN)
-	// 	movedown(map_data);
-	// if (keycode == KEYW || keycode == KEYUP)
-	// 	moveup(map_data);
+	if (keycode == KEYD || keycode == KEYRIGHT)
+		mlx_data->keys->d = 1;
+	if (keycode == KEYA || keycode == KEYLEFT)
+		mlx_data->keys->a = 1;
+	if (keycode == KEYS || keycode == KEYDOWN)
+		mlx_data->keys->s = 1;
+	if (keycode == KEYW || keycode == KEYUP)
+		mlx_data->keys->w = 1;
 	if (keycode == KEYESC)
-		closewin(map_data->mlx_data);
-	return(0);
+		closewin(mlx_data);
+	return (0);
+}
+
+int key_release(int keycode, t_mlx *mlx_data)
+{
+	if (keycode == KEYD || keycode == KEYRIGHT)
+		mlx_data->keys->d = 0;
+	if (keycode == KEYA || keycode == KEYLEFT)
+		mlx_data->keys->a = 0;
+	if (keycode == KEYS || keycode == KEYDOWN)
+		mlx_data->keys->s = 0;
+	if (keycode == KEYW || keycode == KEYUP)
+		mlx_data->keys->w = 0;
+	if (keycode == KEYESC)
+		closewin(mlx_data);
+	return (0);
+}
+
+void paint_backgrown(t_map *map_data, t_mlx *mlx_data)
+{
+	int x;
+	int y;
+	int pixel_position;
+
+	mlx_data->img_data = mlx_get_data_addr(mlx_data->img, &mlx_data->bpp, &mlx_data->bpl, &mlx_data->order_bytes);
+	y = -1;
+	while (++y < 720)
+	{
+		x = -1;
+		while (++x < 1080)
+		{
+			pixel_position = (y * mlx_data->bpl) + (x * (mlx_data->bpp/8)); // entre 8 para comvertir de bits a bytes
+		}
+	}
+
+}
+
+int game_loop(void *data)
+{
+	t_map *map_data;
+
+	map_data = data;
+	paint_backgrown(map_data, map_data->mlx_data);
+	return(1);
 }
 
 int raycast(t_map *map_data)
 {
 	map_data->mlx_data = ft_calloc(1, sizeof(t_mlx));
 	map_data->mlx_data->mlx = mlx_init();
-	if (!init_textures(map_data->files, map_data->mlx_data))
-	{
-		printf("Error: init textures\n");
-		exit(0);
-	}
-	map_data->mlx_data->win = mlx_new_window(map_data->mlx_data->mlx,
-											 (map_data->x_limit - 1) * 50, map_data->y_limit * 50, "Cub3D");
-	
+
+	init_data(map_data);
+	mlx_hook(map_data->mlx_data->win, 2, 1L << 0, key_press, map_data->mlx_data);
+	mlx_key_hook(map_data->mlx_data->win, key_release, map_data->mlx_data);
+	mlx_loop_hook(map_data->mlx_data->mlx, game_loop, map_data);
 	mlx_hook(map_data->mlx_data->win, CLOSEWIN, 0, closewin, map_data->mlx_data);
-	mlx_key_hook(map_data->mlx_data->win, keycodes, map_data);
 	mlx_loop(map_data->mlx_data->mlx);
 	return (1);
 }
