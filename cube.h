@@ -44,6 +44,12 @@ typedef struct s_files
     char *ea_file;
     char *f_file;
     char *c_file;
+    int f_col_r;
+    int f_col_g;
+    int f_col_b;
+    int c_col_r;
+    int c_col_g;
+    int c_col_b;
 } t_files;
 
 typedef struct s_keys
@@ -53,8 +59,20 @@ typedef struct s_keys
     int s;
     int d;
 
-}t_keys;
+} t_keys;
 
+// typedef struct s_minimap
+// {
+//     void *mini_mlx;
+//     void *mini_win;
+//     void *mini_image[5];
+//     char *img_data;
+//     void *img;
+//     int bpp;         // bits per pixel
+//     int bpl;         // bits per line
+//     int order_bytes; // orden de bytes
+
+// } t_minimap;
 
 typedef struct s_mlx
 {
@@ -62,14 +80,15 @@ typedef struct s_mlx
     void *win;
     void *image[5];
     void *img;
-    void *img_data;
+    char *img_data;
     int *texture_data[5];
-    int bpp; // bits per pixel
-    int bpl; // bits per line
+    int bpp;         // bits per pixel
+    int bpl;         // bits per line
     int order_bytes; // orden de bytes
     int img_width;
     int img_height;
     int plyr_angle;
+    // t_minimap *mini_map;
     t_keys *keys;
 } t_mlx;
 
@@ -77,8 +96,8 @@ typedef struct s_map
 {
     char **map;
     int lines;
-    int x;
-    int y;
+    int x_plyr;
+    int y_plyr;
     int x_limit;
     int y_limit;
     char view_player;
@@ -87,21 +106,49 @@ typedef struct s_map
     t_mlx *mlx_data;
 } t_map;
 
-// RAYCAST
+
+//##################################################
+//##                  BONUS                       ##
+//##################################################
+
+// Minimap.c
+// int mini_map(t_map *map_data, t_minimap *mini_map);
+
+//##################################################
+//##                 RAYCAST                      ##
+//##################################################
 
 // Raycast.c
+void init_data(t_map *map_data);
+int game_loop(void *data);
 int raycast(t_map *map_data);
 
-// MAIN.C
+// Keys.c
+int closewin(t_mlx *mlx_data);
+int key_press(int keycode, t_mlx *mlx_data);
+int key_release(int keycode, t_mlx *mlx_data);
+
+//Textures.c
+void paint_backgrown(t_map *map_data, t_mlx *mlx_data);
+int init_textures(t_files *files, t_mlx *mlx_data);
+
+
+//##################################################
+//##                   CUBE                       ##
+//##################################################
 void printmap(char **map);
 
-//FREE.C
+//##################################################
+//##                   FREE                       ##
+//##################################################
 int error(t_map *map_data, char *mes);
 void free_files(t_files *files);
 void free_mlx(t_mlx *mlx);
 void free_mapdata(t_map *map_data);
 
-// GNL
+//##################################################
+//##                    GNL                       ##
+//##################################################
 
 // Get_next_line_utils.c
 int mystrlen(char *str);
@@ -119,23 +166,28 @@ char *get_next_line(int fd);
 int aux_get_map(char **argv, t_map *data_map);
 int get_map(char **argv, t_map *map_data);
 
-// PARSER.C
+//##################################################
+//##                  PARSER                      ##
+//##################################################
 
 // Coordinates.c
 int realloc_map(t_map *map_data, int pos);
 int coordinates_parser(t_map *map_data);
 
 // Flood_fill.c
+char **copy_map(t_map *map_data);
 void find_player(t_map *map_data);
 void limits_map(t_map *map_data);
 int aux_flood_fill(t_map *map_data, int x, int y, char **map);
 int flood_fill(t_map *map_data);
 
 // Parser.c
-int name_map_parser(char **argv);
 int parser(t_map *map_data);
 
 // Utils_parser.c
 void ft_free_free(char **temp);
+int char_not_allow(char **map);
+int name_map_parser(char **argv);
+void sky_floor(t_map *map_data);
 
 #endif

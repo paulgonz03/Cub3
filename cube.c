@@ -24,16 +24,18 @@ void printmap(char **map)
 int main(int argc, char **argv)
 {
     t_map map_data;
-    t_files files;
+    t_files *files;
 
     if (argc != 2)
     {
         printf("Error: not enough arguments\n");
         return (0);
     }
+    files = ft_calloc(1, sizeof(t_files));
+    if (!files)
+        return (1);
     ft_bzero(&map_data, sizeof(map_data));
-    ft_bzero(&files, sizeof(files));
-    map_data.files = &files;
+    map_data.files = files;
     if (!name_map_parser(argv))
         return (error(&map_data, "Error: name map file"));
     if (!get_map(argv, &map_data))

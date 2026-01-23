@@ -24,23 +24,23 @@ char **copy_map(t_map *map_data)
 
 void find_player(t_map *map_data)
 {
-    map_data->y = 0;
-    while (map_data->map[map_data->y][0] == '\n')
-        map_data->y++;
-    while (map_data->map[map_data->y])
+    map_data->y_plyr = 0;
+    while (map_data->map[map_data->y_plyr][0] == '\n')
+        map_data->y_plyr++;
+    while (map_data->map[map_data->y_plyr])
     {
-        map_data->x = 0;
-        while (map_data->map[map_data->y][map_data->x])
+        map_data->x_plyr = 0;
+        while (map_data->map[map_data->y_plyr][map_data->x_plyr])
         {
-            if (map_data->map[map_data->y][map_data->x] == 'N' || map_data->map[map_data->y][map_data->x] == 'S' || map_data->map[map_data->y][map_data->x] == 'E' || map_data->map[map_data->y][map_data->x] == 'W')
+            if (map_data->map[map_data->y_plyr][map_data->x_plyr] == 'N' || map_data->map[map_data->y_plyr][map_data->x_plyr] == 'S' || map_data->map[map_data->y_plyr][map_data->x_plyr] == 'E' || map_data->map[map_data->y_plyr][map_data->x_plyr] == 'W')
             {
-                map_data->view_player = map_data->map[map_data->y][map_data->x];
-                map_data->type = map_data->map[map_data->y][map_data->x];
+                map_data->view_player = map_data->map[map_data->y_plyr][map_data->x_plyr];
+                map_data->type = map_data->map[map_data->y_plyr][map_data->x_plyr];
                 return;
             }
-            map_data->x++;
+            map_data->x_plyr++;
         }
-        map_data->y++;
+        map_data->y_plyr++;
     }
 }
 
@@ -93,7 +93,7 @@ int flood_fill(t_map *map_data)
     temp = copy_map(map_data);
     find_player(map_data);
     limits_map(map_data);
-    if (!aux_flood_fill(map_data, map_data->x, map_data->y, temp))
+    if (!aux_flood_fill(map_data, map_data->x_plyr, map_data->y_plyr, temp))
     {
         ft_free_free(temp);
         printf("Error: open map\n");
