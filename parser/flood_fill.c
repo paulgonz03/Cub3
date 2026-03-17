@@ -39,7 +39,7 @@ int	find_player(t_map *map_data)
 			{
 				count++;
 				if (count > 1)
-					return (printf("Error: multiple players\n"), 0);
+					return (ft_printf("Error: multiple players\n"), 0);
 				map_data->view_player = map_data->map[y][x];
 				map_data->type = map_data->map[y][x];
 				map_data->x_plyr = (float)x + 0.5f;
@@ -63,7 +63,7 @@ void	limits_map(t_map *map_data)
 	while (map_data->map[map_data->y_limit])
 		map_data->y_limit++;
 	len = ft_strlen(map_data->map[j]);
-	while (map_data->map[j] && ft_strlen(map_data->map[j]) > len)
+	while (map_data->map[j] && (int)ft_strlen(map_data->map[j]) > len)
 	{
 		len = ft_strlen(map_data->map[j]);
 		j++;

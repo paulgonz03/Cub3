@@ -6,11 +6,11 @@ LIBFT = $(LIBFT_PATH)/libft.a
 MLX = $(MLX_PATH)/libmlx.a
 CC = cc
 
-SRC = cube.c free.c \
-./gnl/map.c ./gnl/get_next_line.c ./gnl/get_next_line_utils.c \
+SRC = cube.c free.c ./parser/map.c\
 ./parser/flood_fill.c ./parser/parser.c ./parser/coordinates.c ./parser/utils_parser.c ./parser/char_parser.c\
 ./raycast/raycast.c ./raycast/keys.c ./raycast/textures.c ./raycast/rays.c\
-./bonus/minimap.c ./bonus/aux_minimap.c ./animated_sprite/animated_sprite.c\
+./raycast/draw_column.c ./raycast/key_movement.c ./raycast/ray_init.c\
+./raycast/raycast_init.c ./raycast/rays_textures.c ./raycast/rays_utils.c\
 
 OBJS = ${SRC:%.c=objects/%.o}
 

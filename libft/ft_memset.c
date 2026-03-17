@@ -3,35 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulgonz <paulgonz@student.42madrid.c      +#+  +:+       +#+        */
+/*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 20:53:06 by paulgonz          #+#    #+#             */
-/*   Updated: 2024/10/10 20:53:08 by paulgonz         ###   ########.fr       */
+/*   Created: 2024/03/11 14:24:13 by jonamart          #+#    #+#             */
+/*   Updated: 2024/03/14 13:11:58 by jonamart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memset(void *s, int c, size_t n)
+void	*ft_memset(void *str, int c, size_t len)
 {
-	unsigned char	*p;
-	size_t			i;
+	int				i;
+	unsigned char	uc;
+	char			*cstr;
 
-	p = s;
 	i = 0;
-	while (i < n)
+	uc = (unsigned char)c;
+	cstr = (char *)str;
+	if (len <= 0)
+		return (str);
+	while (len > 0)
 	{
-		p[i] = c;
+		cstr[i] = uc;
 		i++;
+		len--;
 	}
-	return (s);
+	return (cstr);
 }
-
-// int main()
-// {
-// 	char s[] = "hola que tal";
-// 	int c = 'c';
-// 	printf ("%p\n", memset(s, c, 9));
-// 	printf ("%p", ft_memset(s, c, 9));
-// 	return(0);
-// }

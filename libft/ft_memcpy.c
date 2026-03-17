@@ -3,38 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulgonz <paulgonz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 21:00:23 by paulgonz          #+#    #+#             */
-/*   Updated: 2024/10/10 21:00:24 by paulgonz         ###   ########.fr       */
+/*   Created: 2024/03/11 15:13:43 by jonamart          #+#    #+#             */
+/*   Updated: 2024/03/26 09:40:09 by jonamart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dest, void const *src, size_t n)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	size_t				i;
-	unsigned char		*d;
-	const unsigned char	*s;
+	int		i;
+	char	*cdst;
+	char	*csrc;
 
-	d = dest;
-	s = src;
+	if (!src && !dst)
+		return (NULL);
 	i = 0;
-	if (!dest && !src)
-		return (0);
-	while (i < n)
+	cdst = (char *)dst;
+	csrc = (char *)src;
+	while (n--)
 	{
-		d[i] = s[i];
+		cdst[i] = csrc[i];
 		i++;
 	}
-	return (d);
+	return (dst);
 }
-
-// int main()
-// {
-// 	char dest[] = "hola";
-// 	char src[] = "pau";
-// 	printf("%p\n", memcpy(dest, src, 2));
-// 	printf("%p\n", ft_memcpy(dest, src, 2));
-// }

@@ -3,35 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulgonz <paulgonz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/09 20:25:32 by paulgonz          #+#    #+#             */
-/*   Updated: 2024/10/10 20:54:37 by paulgonz         ###   ########.fr       */
+/*   Created: 2024/03/11 16:20:56 by jonamart          #+#    #+#             */
+/*   Updated: 2024/03/25 08:37:25 by jonamart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *src, int c)
+char	*ft_strchr(const char *str, int c)
 {
-	int	i;
-
-	i = 0;
-	while (src[i])
-	{
-		if (src[i] == (char)c)
-			return ((char *)src + i);
-		i++;
-	}
-	if (src[i] == (char)c)
-		return ((char *)src + i);
+	while (*str && *str != (unsigned char)c)
+		str++;
+	if (*str == (unsigned char)c)
+		return ((char *)str);
 	return (NULL);
 }
-
-// int	main(void)
-// {
-// 	char src[] = "Hola que tal";
-// 	int c = 'a';
-// 	printf("%s\n", ft_strchr(src, c));
-// 	printf("%s", strchr(src, c));
-// }

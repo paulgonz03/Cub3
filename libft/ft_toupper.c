@@ -3,32 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulgonz <paulgonz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 20:56:15 by paulgonz          #+#    #+#             */
-/*   Updated: 2024/10/10 20:56:20 by paulgonz         ###   ########.fr       */
+/*   Created: 2024/02/13 11:45:40 by jonamart          #+#    #+#             */
+/*   Updated: 2024/03/25 08:38:14 by jonamart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
 int	ft_toupper(int c)
 {
-	if (c >= 'a' && c <= 'z')
+	if ((c >= 97 && c <= 122))
 		c -= 32;
 	return (c);
 }
-
-// int	main(void)
-// {
-// 	int a = 's';
-// 	int b = 'A';
-// 	int c = '7';
-
-// 	printf("%c\n", ft_toupper(a));
-// 	printf("%c\n", ft_toupper(b));
-// 	printf("%c\n", ft_toupper(c));
-// 	printf("%c\n", toupper(a));
-// 	printf("%c\n", toupper(b));
-// 	printf("%c", toupper(c));
-// }
