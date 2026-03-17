@@ -1,5 +1,15 @@
 #include "cube.h"
 
+int	line_break(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && line[i] == '\n')
+		i++;
+	return (i);
+}
+
 int	name_map_parser(char **argv)
 {
 	int	len;

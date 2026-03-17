@@ -25,11 +25,9 @@ int	find_player(t_map *map_data)
 	int	x;
 	int	count;
 
-	y = 0;
+	y = line_break(map_data->map[0]) - 1;
 	count = 0;
-	while (map_data->map[y][0] == '\n')
-		y++;
-	while (map_data->map[y])
+	while (map_data->map[++y])
 	{
 		x = -1;
 		while (map_data->map[y][++x])
@@ -46,7 +44,6 @@ int	find_player(t_map *map_data)
 				map_data->y_plyr = (float)y + 0.5f;
 			}
 		}
-		y++;
 	}
 	return (count == 1);
 }
