@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast.c                                          :+:      :+:    :+:   */
+/*   raycast_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 13:21:15 by jonamart          #+#    #+#             */
-/*   Updated: 2026/03/19 14:26:03 by jonamart         ###   ########.fr       */
+/*   Updated: 2026/03/19 14:54:42 by jonamart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	game_loop(void *data)
 	mlx = map->mlx_data;
 	key_moves(map, mlx);
 	render_frame(map, mlx);
+	mini_map(map, &mlx->mini_map);
 	return (1);
 }
 
@@ -68,11 +69,6 @@ int	raycast(t_map *map)
 	map->mlx_data = ft_calloc(1, sizeof(t_mlx));
 	map->mlx_data->keys = ft_calloc(1, sizeof(t_keys));
 	map->mlx_data->mlx = mlx_init();
-	if (!map->mlx_data->mlx)
-	{
-		ft_printf("Error: mlx_init\n");
-		exit(1);
-	}
 	init_data(map);
 	mlx_hook(map->mlx_data->win, 2, 1L << 0, key_press, map->mlx_data);
 	mlx_hook(map->mlx_data->win, 3, 1L << 1, key_release, map->mlx_data);

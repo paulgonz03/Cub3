@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycast_init.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/19 13:21:08 by jonamart          #+#    #+#             */
+/*   Updated: 2026/03/19 14:25:18 by jonamart         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cube.h"
 
 static void	set_player_angle(t_map *map)
@@ -17,14 +29,14 @@ void	init_data(t_map *map)
 	set_player_angle(map);
 	if (!init_textures(map->files, map->mlx_data))
 	{
-		printf("Error: textures\n");
+		ft_printf("Error: textures\n");
 		exit(1);
 	}
 	map->mlx_data->win = mlx_new_window(map->mlx_data->mlx, WIDTH, HEIGHT,
 			"Cub3D");
 	if (!map->mlx_data->win)
 	{
-		printf("Error: mlx_new_window\n");
+		ft_printf("Error: mlx_new_window\n");
 		exit(1);
 	}
 }

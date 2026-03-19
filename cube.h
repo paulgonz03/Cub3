@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cube.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/19 15:52:41 by jonamart          #+#    #+#             */
+/*   Updated: 2026/03/19 15:52:42 by jonamart         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUBE_H
 # define CUBE_H
 
@@ -16,6 +28,10 @@
 #  define BUFFER_SIZE 42
 # endif
 
+# define MINIMAP_SIZE 12
+# define TILE_SIZE 15
+# define MINIMAP_OFFSET 20
+
 # define KEYA 97
 # define KEYS 115
 # define KEYD 100
@@ -32,7 +48,7 @@
 # define HALF_H 360
 # define PI 3.14159265358979323846
 
-enum		e_tex_id
+enum e_tex_id
 {
 	NO = 0,
 	SO,
@@ -80,29 +96,40 @@ typedef struct s_keys
 	int		d;
 	int		left;
 	int		right;
-}			t_keys;
+}	t_keys;
+
+typedef struct s_minimap
+{
+	void	*wall_img;
+	void	*floor_img;
+	void	*player_img;
+	void	*void_img;
+	int		img_width;
+	int		img_height;
+}	t_minimap;
 
 typedef struct s_mlx
 {
-	void	*mlx;
-	void	*win;
-	void	*image[4];
-	void	*img;
-	char	*img_data;
-	int		*texture_data[4];
-	int		bpp;
-	int		bpl;
-	int		order_bytes;
-	int		img_width;
-	int		img_height;
-	int		plyr_angle;
-	t_keys	*keys;
-	int		tex_width[4];
-	int		tex_height[4];
-	int		tex_bpp[4];
-	int		tex_bpl[4];
-	int		tex_endian[4];
-}			t_mlx;
+	void		*mlx;
+	void		*win;
+	void		*image[4];
+	void		*img;
+	char		*img_data;
+	int			*texture_data[4];
+	int			bpp;
+	int			bpl;
+	int			order_bytes;
+	int			img_width;
+	int			img_height;
+	int			plyr_angle;
+	t_minimap	mini_map;
+	t_keys		*keys;
+	int			tex_width[4];
+	int			tex_height[4];
+	int			tex_bpp[4];
+	int			tex_bpl[4];
+	int			tex_endian[4];
+}	t_mlx;
 
 typedef struct s_map
 {
@@ -116,7 +143,26 @@ typedef struct s_map
 	char	type;
 	t_files	*files;
 	t_mlx	*mlx_data;
-}			t_map;
+}	t_map;
+
+typedef struct s_tile_image
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line;
+	int		end;
+}	t_tile_image;
+
+//##################################################
+//##                  BONUS                       ##
+//##################################################
+
+// Minimap.c
+int			mini_map(t_map *map_data, t_minimap *mini_map);
+int			load_minimap_textures(t_map *map, t_minimap *mm);
+void		*create_tile_img(t_mlx *mlx, int size, int color);
+int			get_map_tile(t_map *m, int x, int y);
 
 /* ---------------------------------------------------------- */
 /*                  STRUCTS  FOR RAYCASTING                   */
