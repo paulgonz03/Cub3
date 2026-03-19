@@ -6,7 +6,7 @@
 /*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 13:21:15 by jonamart          #+#    #+#             */
-/*   Updated: 2026/03/19 14:54:42 by jonamart         ###   ########.fr       */
+/*   Updated: 2026/03/19 16:28:15 by jonamart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	raycast(t_map *map)
 	mlx_hook(map->mlx_data->win, 2, 1L << 0, key_press, map->mlx_data);
 	mlx_hook(map->mlx_data->win, 3, 1L << 1, key_release, map->mlx_data);
 	mlx_hook(map->mlx_data->win, CLOSEWIN, 0, closewin, map->mlx_data);
+	mlx_hook(map->mlx_data->win, 6, 1L << 6, mouse_move, map->mlx_data);
 	mlx_loop_hook(map->mlx_data->mlx, game_loop, map);
 	mlx_loop(map->mlx_data->mlx);
 	return (1);

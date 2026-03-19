@@ -6,7 +6,7 @@
 /*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 15:52:41 by jonamart          #+#    #+#             */
-/*   Updated: 2026/03/19 15:52:42 by jonamart         ###   ########.fr       */
+/*   Updated: 2026/03/19 16:28:50 by jonamart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ int			mini_map(t_map *map_data, t_minimap *mini_map);
 int			load_minimap_textures(t_map *map, t_minimap *mm);
 void		*create_tile_img(t_mlx *mlx, int size, int color);
 int			get_map_tile(t_map *m, int x, int y);
+int			mouse_move(int x, int y, t_mlx *mlx);
 
 /* ---------------------------------------------------------- */
 /*                  STRUCTS  FOR RAYCASTING                   */
