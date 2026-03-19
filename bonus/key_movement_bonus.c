@@ -64,37 +64,20 @@ void	key_moves(t_map *map, t_mlx *mlx)
 		move_player(map, mlx, -dy, dx);
 }
 
-int mouse_center(int x, t_mlx *mlx)
+int	mouse_center(int x, t_mlx *mlx)
 {
+	int	min_x;
+	int	max_x;
+	int	center_y;
 
-	int min_x = 30;
-	int max_x = 1050;
-	int center_y = HEIGHT / 2;
-
-	if (x < min_x )
+	min_x = 30;
+	max_x = 1050;
+	center_y = HEIGHT / 2;
+	if (x < min_x)
 		mlx_mouse_move(mlx->mlx, mlx->win, min_x, center_y);
-	else if (x > max_x )
+	else if (x > max_x)
 		mlx_mouse_move(mlx->mlx, mlx->win, max_x, center_y);
 	return (0);
-}
-
-int	aux_mouse_move(int delta, int x)
-{
-	if (delta < 0)
-	{
-		if(x > 1040)
-			delta = -1;
-		else 
-			delta = -2;
-	}
-	else
-	{
-		if(x < 40)
-			delta = 1;
-		else
-			delta = 2;
-	}
-	return(delta);
 }
 
 int	mouse_move(int x, int y, t_mlx *mlx)

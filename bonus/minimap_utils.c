@@ -31,8 +31,8 @@ static void	fill_img(t_tile_image t_im, int size, int color)
 	{
 		x = -1;
 		while (++x < size)
-			*(unsigned int *)(t_im.addr + \
-				(y * t_im.line + x * (t_im.bpp / 8))) = color;
+			*(unsigned int *)(t_im.addr + (y * t_im.line + x * (t_im.bpp
+							/ 8))) = color;
 	}
 }
 

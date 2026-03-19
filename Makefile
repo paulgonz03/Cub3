@@ -14,7 +14,7 @@ SRC = cube.c free.c ./parser/map.c\
 
 SRC_BONUS = cube.c free.c ./parser/map.c\
 ./parser/flood_fill.c ./parser/parser.c ./parser/coordinates.c ./parser/utils_parser.c ./parser/char_parser.c\
-./bonus/key_movement_bonus.c\
+./bonus/key_movement_bonus.c ./bonus/key_utils.c\
 ./bonus/raycast_bonus.c ./bonus/minimap.c ./raycast/keys.c ./raycast/textures.c ./raycast/rays.c\
 ./bonus/minimap_utils.c ./raycast/draw_column.c ./raycast/ray_init.c\
 ./raycast/raycast_init.c ./raycast/rays_textures.c ./raycast/rays_utils.c\
