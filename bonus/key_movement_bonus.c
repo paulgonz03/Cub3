@@ -67,15 +67,34 @@ void	key_moves(t_map *map, t_mlx *mlx)
 int mouse_center(int x, t_mlx *mlx)
 {
 
-    int min_x = 30;
+	int min_x = 30;
 	int max_x = 1050;
-    int center_y = HEIGHT / 2;
+	int center_y = HEIGHT / 2;
 
-    if (x < min_x )
-        mlx_mouse_move(mlx->mlx, mlx->win, min_x, center_y);
+	if (x < min_x )
+		mlx_mouse_move(mlx->mlx, mlx->win, min_x, center_y);
 	else if (x > max_x )
-        mlx_mouse_move(mlx->mlx, mlx->win, max_x, center_y);
-    return (0);
+		mlx_mouse_move(mlx->mlx, mlx->win, max_x, center_y);
+	return (0);
+}
+
+int	aux_mouse_move(int delta, int x)
+{
+	if (delta < 0)
+	{
+		if(x > 1040)
+			delta = -1;
+		else 
+			delta = -2;
+	}
+	else
+	{
+		if(x < 40)
+			delta = 1;
+		else
+			delta = 2;
+	}
+	return(delta);
 }
 
 int	mouse_move(int x, int y, t_mlx *mlx)
@@ -89,10 +108,7 @@ int	mouse_move(int x, int y, t_mlx *mlx)
 	if (last_x == -1)
 		last_x = x;
 	delta = x - last_x;
-	if (delta < 0)
-		delta = -1;
-	else
-		delta = 2;
+	delta = aux_mouse_move(delta, x);
 	last_x = x;
 	mlx->plyr_angle += delta * 1.4;
 	if (mlx->plyr_angle < 0)
@@ -102,5 +118,3 @@ int	mouse_move(int x, int y, t_mlx *mlx)
 	mouse_center(x, mlx);
 	return (0);
 }
-
-
