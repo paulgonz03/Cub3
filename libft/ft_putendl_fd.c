@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulgonz <paulgonz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 20:53:33 by paulgonz          #+#    #+#             */
-/*   Updated: 2024/10/10 21:12:00 by paulgonz         ###   ########.fr       */
+/*   Created: 2024/03/13 13:36:32 by jonamart          #+#    #+#             */
+/*   Updated: 2024/03/15 10:22:29 by jonamart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,10 @@ void	ft_putendl_fd(char *s, int fd)
 	int	i;
 
 	i = 0;
-	while (s[i])
+	while (s[i] != '\0')
 	{
-		write(fd, &s[i], 1);
+		ft_putchar_fd (s[i], fd);
 		i++;
 	}
-	write(fd, "\n", 1);
+	ft_putchar_fd ('\n', fd);
 }
-
-// int main()
-// {
-//     char s[] = "hola que tal";
-//     int fd = open("paulaa.txt", O_WRONLY);
-//     ft_putendl_fd(s, fd);
-// }

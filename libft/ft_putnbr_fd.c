@@ -3,53 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulgonz <paulgonz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/09 15:48:31 by paulgonz          #+#    #+#             */
-/*   Updated: 2024/10/10 21:12:38 by paulgonz         ###   ########.fr       */
+/*   Created: 2024/03/13 13:44:24 by jonamart          #+#    #+#             */
+/*   Updated: 2024/10/16 15:11:32 by jonamart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_numb(int fd)
-{
-	write(fd, "-", 1);
-	write(fd, "2", 1);
-	write(fd, "1", 1);
-	write(fd, "4", 1);
-	write(fd, "7", 1);
-	write(fd, "4", 1);
-	write(fd, "8", 1);
-	write(fd, "3", 1);
-	write(fd, "6", 1);
-	write(fd, "4", 1);
-	write(fd, "8", 1);
-}
+static int	count_digit(int nb);
+static int	ft_pow(int number);
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	char	aux;
+	int				digits;
+	long long int	lnb;
+	int				neg;
 
-	if (n == -2147483648)
+	lnb = n;
+	neg = 0;
+	if (lnb < 0)
 	{
-		ft_numb(fd);
-		return ;
+		neg = 1;
+		lnb = lnb * -1;
 	}
-	if (n < 0 && n > -2147483648)
+	digits = count_digit (lnb);
+	if (neg)
+		ft_putchar_fd ('-', fd);
+	while (digits != 0)
 	{
-		n = n * (-1);
-		write(fd, "-", 1);
+		ft_putchar_fd (lnb / ft_pow (digits) + 48, fd);
+		lnb = lnb % ft_pow (digits--);
 	}
-	if (n > 9)
-		ft_putnbr_fd(n / 10, fd);
-	aux = n % 10 + 48;
-	write(fd, &aux, 1);
 }
 
-// int main()
-// {
-//     int n = -2147483648;
-//     int fd = 2;
-//     ft_putnbr_fd(n, fd);
-// }
+static int	count_digit(int nb)
+{
+	int	count;
+
+	count = 1;
+	while (nb / 10 != 0)
+	{
+		count++;
+		nb = nb / 10;
+	}
+	return (count);
+}
+
+static int	ft_pow(int number)
+{
+	int	res;
+
+	res = 1;
+	while (number > 1)
+	{
+		res *= 10;
+		number--;
+	}
+	return (res);
+}

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: paulgonz <paulgonz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/19 17:40:59 by paulgonz          #+#    #+#             */
+/*   Updated: 2026/03/19 17:41:13 by paulgonz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cube.h"
 
 char	**copy_map(t_map *map_data)
@@ -25,11 +37,9 @@ int	find_player(t_map *map_data)
 	int	x;
 	int	count;
 
-	y = 0;
+	y = line_break(map_data->map[0]) - 1;
 	count = 0;
-	while (map_data->map[y][0] == '\n')
-		y++;
-	while (map_data->map[y])
+	while (map_data->map[++y])
 	{
 		x = -1;
 		while (map_data->map[y][++x])
@@ -39,14 +49,13 @@ int	find_player(t_map *map_data)
 			{
 				count++;
 				if (count > 1)
-					return (printf("Error: multiple players\n"), 0);
+					return (0);
 				map_data->view_player = map_data->map[y][x];
 				map_data->type = map_data->map[y][x];
 				map_data->x_plyr = (float)x + 0.5f;
 				map_data->y_plyr = (float)y + 0.5f;
 			}
 		}
-		y++;
 	}
 	return (count == 1);
 }
@@ -63,7 +72,7 @@ void	limits_map(t_map *map_data)
 	while (map_data->map[map_data->y_limit])
 		map_data->y_limit++;
 	len = ft_strlen(map_data->map[j]);
-	while (map_data->map[j] && ft_strlen(map_data->map[j]) > len)
+	while (map_data->map[j] && (int)ft_strlen(map_data->map[j]) > len)
 	{
 		len = ft_strlen(map_data->map[j]);
 		j++;

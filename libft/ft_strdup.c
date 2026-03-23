@@ -3,38 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulgonz <paulgonz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 20:54:40 by paulgonz          #+#    #+#             */
-/*   Updated: 2024/10/10 20:54:46 by paulgonz         ###   ########.fr       */
+/*   Created: 2024/03/12 10:49:01 by jonamart          #+#    #+#             */
+/*   Updated: 2024/03/15 10:24:24 by jonamart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(const char *s1)
 {
+	char	*cpy;
+	char	*cs1;
 	int		i;
-	char	*p;
-	int		j;
 
-	j = 0;
-	i = (ft_strlen(s));
-	p = malloc((i + 1) * sizeof(char));
-	if (!p)
-		return (NULL);
-	while (s[j])
+	i = 0;
+	cs1 = (char *)s1;
+	cpy = (char *)malloc (ft_strlen (cs1) * sizeof (char) + 1);
+	if (cpy == NULL)
+		return (cpy);
+	while (cs1[i])
 	{
-		p[j] = s[j];
-		j++;
+		cpy[i] = cs1[i];
+		i++;
 	}
-	p[j] = '\0';
-	return (p);
+	cpy[i] = '\0';
+	return (cpy);
 }
-
-// int main()
-// {
-// 	char s[] = "hola que tal";
-// 	printf("%s\n", ft_strdup(s));
-// 	printf("%s", strdup(s));
-// }

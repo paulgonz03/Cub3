@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: paulgonz <paulgonz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/19 17:40:59 by paulgonz          #+#    #+#             */
+/*   Updated: 2026/03/19 17:41:13 by paulgonz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cube.h"
 
 int	char_parser(char **map, char c)
@@ -25,7 +37,7 @@ int	char_not_allow(char **map)
 	while (map[j] && map[j][0] == '\n')
 		j++;
 	if (!map[j])
-		return (printf("Error: no map found\n"), 0);
+		return (0);
 	while (map[j])
 	{
 		i = -1;

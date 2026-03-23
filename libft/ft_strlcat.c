@@ -5,47 +5,31 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/09 20:25:24 by paulgonz          #+#    #+#             */
-/*   Updated: 2026/02/19 18:25:05 by jonamart         ###   ########.fr       */
+/*   Created: 2024/02/15 21:21:45 by jonamart          #+#    #+#             */
+/*   Updated: 2024/03/26 18:46:40 by jonamart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
 	size_t	i;
-	size_t	j;
-	int		lensrc;
-	size_t	lendst;
+	size_t	len;
+	int		len_src;
 
+	len = 0;
 	i = 0;
-	j = 0;
-	lensrc = ft_strlen(src);
-	while (dst[j] && j < size)
-		j++;
-	lendst = j;
-	if (size == 0 || size <= lendst)
-		return (lensrc + size);
-	while (src[i] && i < size - lendst - 1)
+	len_src = ft_strlen(src);
+	while (dst[i] && i < dstsize)
+		i++;
+	len = i;
+	while (src[i - len] && i + 1 < dstsize)
 	{
-		dst[j] = src[i];
-		j++;
+		dst[i] = src[i - len];
 		i++;
 	}
-	dst[j] = '\0';
-	return (lensrc + lendst);
+	if (len < dstsize)
+		dst[i] = '\0';
+	return (len + len_src);
 }
-
-// int	main(void)
-// {
-// 	// char *dst = NULL;
-// 	// char src[] = "hola";
-// 	char *dst1 = NULL;
-// 	char src1[] = "hola";
-
-// 	// printf("%ld\n", ft_strlcat(dst, src, 4));
-// 	printf("%ld\n", strlcat(dst1, src1, 4));
-// 	// printf("%s\n", dst);
-// 	printf("%s", dst1);
-// }

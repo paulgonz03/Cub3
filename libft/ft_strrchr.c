@@ -3,35 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulgonz <paulgonz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 13:28:49 by paulgonz          #+#    #+#             */
-/*   Updated: 2024/10/10 20:55:54 by paulgonz         ###   ########.fr       */
+/*   Created: 2024/03/11 16:34:17 by jonamart          #+#    #+#             */
+/*   Updated: 2024/03/26 18:41:07 by jonamart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *src, int c)
+char	*ft_strrchr(const char *s, int c)
 {
-	int	i;
+	int			i;
+	const char	*first;
 
-	i = 0;
-	while (src[i])
-		i++;
-	while (i >= 0)
-	{
-		if (src[i] == (char)c)
-			return ((char *)&src[i]);
-		i--;
-	}
+	first = s;
+	i = ft_strlen(s);
+	s = (s + i);
+	while (s != first && (unsigned char)c != *s)
+		s--;
+	if (*s == (unsigned char)c)
+		return ((char *)s);
 	return (NULL);
 }
-
-// int	main(void)
-// {
-// 	char src[] = "Paulahjj";
-// 	int c = 'a';
-// 	printf("%s\n", ft_strrchr(src, c));
-// 	printf("%s", strrchr(src, c));
-// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulgonz <paulgonz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 14:06:34 by paulgonz          #+#    #+#             */
-/*   Updated: 2024/10/10 20:52:42 by paulgonz         ###   ########.fr       */
+/*   Created: 2024/03/12 09:44:29 by jonamart          #+#    #+#             */
+/*   Updated: 2024/03/26 09:38:54 by jonamart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,20 @@
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	unsigned char	*p1;
-	unsigned char	*p2;
-	size_t			i;
+	unsigned char	*cs1;
+	unsigned char	*cs2;
 
-	p1 = (unsigned char *)s1;
-	p2 = (unsigned char *)s2;
-	i = 0;
-	if (n == 0)
-		return (0);
-	while (i < n)
+	cs1 = (unsigned char *)s1;
+	cs2 = (unsigned char *)s2;
+	while (n--)
 	{
-		if (p1[i] != p2[i])
-			break ;
-		i++;
+		if (*cs1 - *cs2 == 0)
+		{
+			cs1++;
+			cs2++;
+		}
+		else
+			return (*cs1 - *cs2);
 	}
-	if (i >= n)
-		return (0);
-	return ((unsigned char)p1[i] - (unsigned char)p2[i]);
+	return (0);
 }
-
-// int main()
-// {
-// 	char s1[] = "paula";
-// 	char s2[] = "paulj";
-// 	char s3[] = "paula";
-// 	char s4[] = "paulj";
-// 	printf("%d\n", ft_memcmp(s1, s2, 5));
-// 	printf("%d", memcmp(s3, s4, 5));
-// }

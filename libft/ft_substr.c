@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulgonz <paulgonz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 15:08:57 by paulgonz          #+#    #+#             */
-/*   Updated: 2024/10/10 20:56:04 by paulgonz         ###   ########.fr       */
+/*   Created: 2024/03/12 11:34:43 by jonamart          #+#    #+#             */
+/*   Updated: 2024/03/26 19:00:50 by jonamart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,29 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char			*p;
-	unsigned int	i;
-	size_t			j;
-	unsigned int	lenstr;
+	char	*res;
+	size_t	fix_len;
+	size_t	s_len;
 
-	j = 0;
-	i = start;
-	lenstr = ft_strlen(s);
 	if (!s)
-		return (0);
-	if (start >= lenstr)
-		return (ft_strdup(""));
-	if (lenstr - start < len)
-		len = (lenstr - start);
-	p = ft_calloc((len + 1), sizeof(char));
-	if (!p)
-		return (0);
-	while (s[i] && j < len)
-		p[j++] = s[i++];
-	return (p);
+		return (NULL);
+	s_len = ft_strlen (s);
+	if (start >= s_len)
+	{
+		res = malloc(1);
+		if (res)
+			res[0] = '\0';
+		return (res);
+	}
+	if (s_len - start < len)
+		fix_len = s_len - start;
+	else
+		fix_len = len;
+	res = malloc (fix_len + 1);
+	if (res)
+	{
+		ft_memcpy(res, (char *)s + start, fix_len);
+		res[fix_len] = '\0';
+	}
+	return (res);
 }
-
-// int main()
-// {
-// 	char s[] = "hola que tal";
-// 	unsigned int start = 5;
-// 	printf("%s", ft_substr(s, start, 7));
-// }

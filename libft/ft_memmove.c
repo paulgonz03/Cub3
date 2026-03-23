@@ -3,44 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulgonz <paulgonz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/09 19:01:56 by paulgonz          #+#    #+#             */
-/*   Updated: 2024/10/10 20:52:52 by paulgonz         ###   ########.fr       */
+/*   Created: 2024/03/11 15:22:21 by jonamart          #+#    #+#             */
+/*   Updated: 2024/03/26 10:50:08 by jonamart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove(void *dest, const void *src, size_t n)
-{
-	int					i;
-	unsigned char		*d;
-	const unsigned char	*s;
+static void	over_lap_copy( char *dst, char *src, size_t len);
 
-	d = dest;
-	s = src;
-	i = 0;
-	if (d == NULL && s == NULL)
-		return (0);
-	if (d <= s)
-		ft_memcpy(dest, src, n);
-	else
-	{
-		i = (int)n - 1;
-		while (i >= 0)
-		{
-			d[i] = s[i];
-			i--;
-		}
-	}
-	return (d);
+void	*ft_memmove(void *dst, const void *src, size_t len)
+{
+	char	*cdst;
+	char	*csrc;
+
+	if (! dst && ! src)
+		return (NULL);
+	cdst = (char *)dst;
+	csrc = (char *)src;
+	over_lap_copy (cdst, csrc, len);
+	return (dst);
 }
 
-// int main()
-// {
-// 	char *src = "adios";
-// 	char *dest = "hola que tal";
-// 	// printf("A: %p\n", ft_memmove(dest, src, 7));
-// 	printf("B: %p\n", memmove(dest, src, 7));
-// }
+static void	over_lap_copy( char *dst, char *src, size_t len)
+{
+	size_t	i;
+
+	if (src < dst)
+	{
+		i = len;
+		while (i > 0)
+		{
+			i--;
+			dst[i] = src[i];
+		}
+	}
+	else
+	{
+		i = 0;
+		while (i < len)
+		{
+			dst[i] = src[i];
+			i++;
+		}
+	}
+}

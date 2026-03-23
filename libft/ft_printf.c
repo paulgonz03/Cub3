@@ -3,58 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulgonz <paulgonz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/18 18:08:07 by paulgonz          #+#    #+#             */
-/*   Updated: 2024/10/18 19:05:56 by paulgonz         ###   ########.fr       */
+/*   Created: 2024/03/27 17:50:25 by jonamart          #+#    #+#             */
+/*   Updated: 2024/04/11 18:23:17 by jonamart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-int	ft_condition(char const p, va_list args)
+static int	check_format(char const *format, t_reader *rd, va_list ap);
+
+int	ft_printf(char const *format, ...)
 {
-	if (p == 'c')
-		return (ft_printchar(va_arg(args, int)));
-	if (p == 's')
-		return (ft_printstr(va_arg(args, char *)));
-	if (p == 'd' || p == 'i')
-		return (ft_printnbr(va_arg(args, int)));
-	if (p == 'u')
-		return (ft_printunbr(va_arg(args, int)));
-	if (p == 'x' || p == 'X')
-		return (ft_printhex(va_arg(args, unsigned int), p));
-	if (p == 'p')
-		return (ft_printhex(va_arg(args, unsigned long int), p));
-	if (p == '%')
-		return (write(1, "%", 1));
-	return (0);
+	int			count;
+	t_reader	*rd;
+	va_list		ap;
+
+	va_start(ap, format);
+	rd = NULL;
+	rd = new_reader();
+	if (!rd)
+		return (-1);
+	rd->number = 1;
+	count = 0;
+	count += check_format(format, rd, ap);
+	va_end(ap);
+	free_reader(&rd);
+	free(rd);
+	return (count);
 }
 
-int	ft_printf(char const *p, ...)
+static int	check_format(char const *format, t_reader *rd, va_list ap)
 {
-	va_list	args;
-	int		res;
-	int		counter;
+	int	count;
 
-	va_start(args, p);
-	counter = 0;
-	while (*p)
+	count = 0;
+	while (*format != '\0')
 	{
-		if (*p == '%')
-			res = ft_condition(*(++p), args);
+		if (*format == '%')
+		{
+			read_format(&format, rd);
+			count += print_format (*format, ap, rd);
+			clear_reader(&rd);
+		}
 		else
-			res = write(1, p, 1);
-		counter += res;
-		p++;
+			count += write (1, format, 1);
+		format++;
 	}
-	va_end(args);
-	return (counter);
+	return (count);
 }
-
-// int main()
-// {
-// 	printf(" - %d", ft_printf("%d", 100));
-// 	printf("\n");
-// 	printf(" - %d", printf("%d", 100));
-// }

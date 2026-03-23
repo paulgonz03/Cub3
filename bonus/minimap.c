@@ -1,81 +1,104 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: paulgonz <paulgonz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/19 17:40:59 by paulgonz          #+#    #+#             */
+/*   Updated: 2026/03/19 17:41:13 by paulgonz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cube.h"
-#include "minilibx-linux/mlx.h"
 
-// verifica coordenadas y devuelve el tipo de casilla
-static int	get_map_tile(t_map *map_data, int map_x, int map_y)
-{
-	if (map_x < 0 || map_y < 0) // comprueba los limites
-		return (-1);
-	if (map_y >= map_data->y_limit) // si es invalido
-		return (-1);
-	if (!map_data->map[map_y]) // si es invalido
-		return (-1);
-	if (map_x >= (int)ft_strlen(map_data->map[map_y]))
-		return (-1);
-	return (map_data->map[map_y][map_x]); // devuelve el caracter
-}
-
-// dibuja la flecha del personaje
-static void	draw_player(t_mlx *mlx_data, int cx, int cy, float angle)
-{
-	draw_circle(mlx_data, cx, cy);
-	draw_direction(mlx_data, cx, cy, angle);
-}
-
-// obtiene la imagen segun el tipo de tile
-static void	*get_tile_img(t_minimap *mini_map, int tile)
+static void	*select_img(t_minimap *mm, int tile)
 {
 	if (tile == '1')
-		return (mini_map->wall_img);
-	else if (tile == 'T')
-		return (mini_map->fire_img);
-	else if (tile == '0' || tile == 'N' || tile == 'S' || tile == 'E'
-		|| tile == 'W')
-		return (mini_map->floor_img);
-	else
-		return (mini_map->void_img);
+		return (mm->wall_img);
+	if (tile == '0' || tile == 'N' || tile == 'S'
+		|| tile == 'E' || tile == 'W')
+		return (mm->floor_img);
+	return (mm->void_img);
 }
 
-// renderiza los tiles del minimapa
-static void	render_tiles(t_map *map_data, t_minimap *mini_map, float off[2])
+static void	draw_dir(t_mlx *mlx, int cx, int cy)
 {
-	t_mlx	*mlx;
-	int		x;
-	int		y;
-	int		tile;
+	int		i;
+	float	a;
+	int		dx;
+	int		dy;
 
-	mlx = map_data->mlx_data;
+	a = mlx->plyr_angle * PI / 180.0;
+	i = 0;
+	while (i < TILE_SIZE * 2 / 3)
+	{
+		dx = (int)(cos(a) * i);
+		dy = (int)(sin(a) * i);
+		mlx_pixel_put(mlx->mlx, mlx->win, cx + dx, cy + dy, 0xFF0000);
+		i++;
+	}
+}
+
+static void	draw_player(t_mlx *mlx, int cx, int cy)
+{
+	int	r;
+	int	x;
+	int	y;
+
+	r = TILE_SIZE / 3;
+	y = -r;
+	while (y <= r)
+	{
+		x = -r;
+		while (x <= r)
+		{
+			if (x * x + y * y <= r * r)
+				mlx_pixel_put(mlx->mlx, mlx->win, cx + x, cy + y, 0x00FF00);
+			x++;
+		}
+		y++;
+	}
+	draw_dir(mlx, cx, cy);
+}
+
+static void	draw_tiles(t_map *map, t_minimap *mm, t_mlx *mlx)
+{
+	int	x;
+	int	y;
+	int	tile;
+
 	y = -1;
 	while (++y <= MINIMAP_SIZE)
 	{
 		x = -1;
 		while (++x <= MINIMAP_SIZE)
 		{
-			tile = get_map_tile(map_data, (int)map_data->x_plyr + x
-					- MINIMAP_SIZE / 2, (int)map_data->y_plyr + y - MINIMAP_SIZE
-					/ 2);
-			mlx_put_image_to_window(mlx->mlx, mlx->win, get_tile_img(mini_map,
-					tile), x * TILE_SIZE + MINIMAP_OFFSET - (int)(off[0]
-					* TILE_SIZE), y * TILE_SIZE + MINIMAP_OFFSET - (int)(off[1]
-					* TILE_SIZE));
+			tile = get_map_tile(map,
+					map->x_plyr + x - MINIMAP_SIZE / 2,
+					map->y_plyr + y - MINIMAP_SIZE / 2);
+			mlx_put_image_to_window(mlx->mlx, mlx->win,
+				select_img(mm, tile),
+				x * TILE_SIZE + MINIMAP_OFFSET,
+				y * TILE_SIZE + MINIMAP_OFFSET);
 		}
 	}
 }
 
-int	mini_map(t_map *map_data, t_minimap *mini_map)
+int	mini_map(t_map *map, t_minimap *mm)
 {
-	t_mlx		*mlx_data;
-	static int	loaded = 0;
-	float		off[2];
+	static int	loaded;
+	t_mlx		*mlx;
 
-	mlx_data = map_data->mlx_data;
-	if (!loaded && !load_minimap_textures(map_data, mini_map))
+	if (!loaded)
+		loaded = 0;
+	mlx = map->mlx_data;
+	if (!loaded && !load_minimap_textures(map, mm))
 		return (0);
 	loaded = 1;
-	off[0] = map_data->x_plyr - (int)map_data->x_plyr;
-	off[1] = map_data->y_plyr - (int)map_data->y_plyr;
-	render_tiles(map_data, mini_map, off);
-	draw_player(mlx_data, MINIMAP_OFFSET + (MINIMAP_SIZE * TILE_SIZE) / 2,
-		MINIMAP_OFFSET + (MINIMAP_SIZE * TILE_SIZE) / 2, mlx_data->plyr_angle);
+	draw_tiles(map, mm, mlx);
+	draw_player(mlx,
+		MINIMAP_OFFSET + (MINIMAP_SIZE * TILE_SIZE) / 2,
+		MINIMAP_OFFSET + (MINIMAP_SIZE * TILE_SIZE) / 2);
 	return (1);
 }

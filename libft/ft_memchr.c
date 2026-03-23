@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulgonz <paulgonz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 14:01:28 by paulgonz          #+#    #+#             */
-/*   Updated: 2024/10/10 20:52:36 by paulgonz         ###   ########.fr       */
+/*   Created: 2024/03/11 16:46:46 by jonamart          #+#    #+#             */
+/*   Updated: 2024/03/26 10:22:39 by jonamart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,16 @@
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	size_t			i;
-	unsigned char	*p;
+	size_t		i;
+	char		*string;
 
-	p = (unsigned char *)s;
 	i = 0;
+	string = (void *)s;
 	while (i < n)
 	{
-		if (p[i] == (unsigned char)c)
-			return (p + i);
+		if (string[i] == (char)c)
+			return (&string[i]);
 		i++;
 	}
-	return (0);
+	return (NULL);
 }
-
-// int main()
-// {
-// 	char s[] = "paulgonz";
-// 	int c = 'g';
-// 	char s1[] = "paulgonz";
-// 	int c1 = 'g';
-// 	printf("%s\n", (char *)ft_memchr(s, c, 6));
-// 	printf("%s", (char *)memchr(s1, c1, 6));
-// }

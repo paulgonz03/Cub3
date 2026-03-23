@@ -3,88 +3,89 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulgonz <paulgonz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/09 15:42:46 by paulgonz          #+#    #+#             */
-/*   Updated: 2024/10/11 13:00:38 by paulgonz         ###   ########.fr       */
+/*   Created: 2024/03/13 10:39:57 by jonamart          #+#    #+#             */
+/*   Updated: 2024/10/16 14:31:46 by jonamart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	len(int n)
+static char		*get_vector(int digits, int neg);
+static int		ft_pow(int number);
+static int		count_digit(int nb);
+static void		put_digit(int neg, int digits, char *s, long long int lnb);
+
+char	*ft_itoa(int n)
+{
+	int				digits;
+	long long int	lnb;
+	char			*s;
+	int				neg;
+
+	lnb = n;
+	neg = 1;
+	if (lnb < 0)
+	{
+		neg = 2;
+		lnb = lnb * -1;
+	}
+	digits = count_digit (lnb);
+	s = get_vector(digits, neg);
+	if (!s)
+		return (NULL);
+	put_digit (neg, digits, s, lnb);
+	return (s);
+}
+
+static int	count_digit(int nb)
+{
+	int	count;
+
+	count = 1;
+	while (nb / 10 != 0)
+	{
+		count++;
+		nb = nb / 10;
+	}
+	return (count);
+}
+
+static int	ft_pow(int number)
+{
+	int	res;
+
+	res = 1;
+	while (number > 1)
+	{
+		res *= 10;
+		number--;
+	}
+	return (res);
+}
+
+static char	*get_vector(int digits, int neg)
+{
+	char	*s;
+
+	s = (char *) malloc (digits * sizeof(char) + neg);
+	if (s == NULL)
+		return (NULL);
+	return (s);
+}
+
+static void	put_digit(int neg, int digits, char *s, long long int lnb)
 {
 	int	i;
 
 	i = 0;
-	if (n == -2147483648)
+	if (neg == 2)
+		s[i++] = '-';
+	while (digits != 0)
 	{
-		i = 11;
-		return (i);
+		s[i++] = lnb / ft_pow (digits) + 48;
+		lnb = lnb % ft_pow (digits--);
 	}
-	if (n < 0)
-	{
-		i++;
-		n *= -1;
-	}
-	if (n == 0)
-		i++;
-	while (n > 0)
-	{
-		n = n / 10;
-		i++;
-	}
-	return (i);
+	s[i] = '\0';
 }
-
-char	*minnum(int nb, char *p, int aux)
-{
-	nb *= -1;
-	nb = nb - 1;
-	if (nb == 2147483647)
-	{
-		p[aux--] = (nb % 10) + 49;
-		nb = nb / 10;
-	}
-	while (nb > 0)
-	{
-		p[aux--] = (nb % 10) + 48;
-		nb = nb / 10;
-	}
-	return (p);
-}
-
-char	*ft_itoa(int n)
-{
-	char	*p;
-	int		aux;
-	int		nb;
-
-	nb = n;
-	aux = len(n);
-	p = malloc((aux + 1) * sizeof(char));
-	if (!p)
-		return (NULL);
-	p[aux--] = '\0';
-	if (!nb)
-		p[0] = '0';
-	if (nb == -2147483648)
-		minnum(nb, p, aux);
-	if (nb < 0)
-	{
-		nb *= -1;
-		p[0] = '-';
-	}
-	while (nb > 0)
-	{
-		p[aux--] = (nb % 10) + 48;
-		nb = nb / 10;
-	}
-	return (p);
-}
-
-// int main()
-// {
-// 	int n = 0;
-// 	printf("%s", ft_itoa(n));
-// }

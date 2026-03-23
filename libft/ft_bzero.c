@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulgonz <paulgonz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonamart <jonamart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 20:58:33 by paulgonz          #+#    #+#             */
-/*   Updated: 2024/10/10 20:58:34 by paulgonz         ###   ########.fr       */
+/*   Created: 2024/03/11 14:41:45 by jonamart          #+#    #+#             */
+/*   Updated: 2024/03/15 16:34:53 by jonamart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,14 @@
 
 void	ft_bzero(void *s, size_t n)
 {
-	unsigned char	*p;
-	size_t			i;
+	size_t	i;
+	char	*str;
 
-	p = s;
 	i = 0;
+	str = (char *)s;
 	while (i < n)
 	{
-		p[i] = '\0';
+		str[i] = '\0';
 		i++;
 	}
 }
-
-// int main()
-// {
-// 	char s[] = "hola que tal";
-// 	char s2[] = "hola que tal";
-// 	ft_bzero(s, 13);
-// 	bzero(s2, 13);
-// 	printf("ft_bzero :%s\n", s);
-// 	printf("bzero :%s", s2);
-// }
