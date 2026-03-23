@@ -37,7 +37,7 @@ int	char_not_allow(char **map)
 	while (map[j] && map[j][0] == '\n')
 		j++;
 	if (!map[j])
-		return (printf("Error: no map found\n"), 0);
+		return (0);
 	while (map[j])
 	{
 		i = -1;

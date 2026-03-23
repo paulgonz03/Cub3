@@ -49,7 +49,7 @@ int	find_player(t_map *map_data)
 			{
 				count++;
 				if (count > 1)
-					return (ft_printf("Error: multiple players\n"), 0);
+					return (0);
 				map_data->view_player = map_data->map[y][x];
 				map_data->type = map_data->map[y][x];
 				map_data->x_plyr = (float)x + 0.5f;

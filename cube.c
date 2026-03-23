@@ -20,7 +20,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 	{
 		printf("Error: not enough arguments\n");
-		return (0);
+		return (1);
 	}
 	files = ft_calloc(1, sizeof(t_files));
 	if (!files)
@@ -36,6 +36,6 @@ int	main(int argc, char **argv)
 	if (!raycast(&map_data))
 	{
 		free_mapdata(&map_data);
-		return (0);
+		return (1);
 	}
 }

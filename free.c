@@ -26,7 +26,7 @@ int	error(t_map *map_data, char *mes)
 {
 	printf("%s\n", mes);
 	free_mapdata(map_data);
-	return (0);
+	return (1);
 }
 
 void	free_files(t_files *files)
